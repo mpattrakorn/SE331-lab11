@@ -1,6 +1,7 @@
 package camt.cbsd.entity.security;
 
 import camt.cbsd.entity.Student;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
@@ -59,6 +60,7 @@ public class User {
     private Date lastPasswordResetDate;
 
     @OneToOne
+    @JsonBackReference
     Student student;
 
 
@@ -67,6 +69,8 @@ public class User {
             name = "USER_AUTHORITY",
             joinColumns = {@JoinColumn(name = "USER_ID", referencedColumnName = "ID")},
             inverseJoinColumns = {@JoinColumn(name = "AUTHORITY_ID", referencedColumnName = "ID")})
+
+    @JsonBackReference
     private List<Authority> authorities;
 
     public Long getId() {

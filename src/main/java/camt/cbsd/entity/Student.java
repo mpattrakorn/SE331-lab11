@@ -1,8 +1,11 @@
 package camt.cbsd.entity;
 
+import camt.cbsd.config.json.View;
 import camt.cbsd.entity.security.Authority;
 import camt.cbsd.entity.security.User;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonView;
 import lombok.*;
 import org.hibernate.annotations.*;
 import org.hibernate.annotations.CascadeType;
@@ -27,10 +30,14 @@ public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     long id;
+    @JsonView(View.Login.class)
     String studentId;
+    @JsonView(View.Login.class)
     String name;
+    @JsonView(View.Login.class)
     String surname;
     double gpa;
+    @JsonView(View.Login.class)
     String image;
     boolean feature;
     int penAmount;
@@ -39,7 +46,9 @@ public class Student {
     List<Course> enrolledCourse = new ArrayList<>();
 
     @OneToOne(mappedBy = "student")
+    @JsonManagedReference
     User user;
+
 
     public List<Course> addCourse(Course course) {
         enrolledCourse = Optional.ofNullable(enrolledCourse).orElse(new ArrayList<>());
@@ -48,6 +57,7 @@ public class Student {
 
     }
 
+    @JsonView(View.Login.class)
     public List<Authority> getAuthorities(){
         return user.getAuthorities();
     }

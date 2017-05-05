@@ -1,5 +1,6 @@
 package camt.cbsd.entity.security;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
@@ -26,6 +27,7 @@ public class Authority {
     @Enumerated(EnumType.STRING)
     private AuthorityName name;
 
+    @JsonBackReference
     @ManyToMany(mappedBy = "authorities", fetch = FetchType.LAZY)
     private List<User> users;
 
