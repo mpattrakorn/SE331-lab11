@@ -1,5 +1,6 @@
 package camt.cbsd.entity.security;
 
+import camt.cbsd.entity.Student;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
@@ -56,6 +57,10 @@ public class User {
     @Temporal(TemporalType.TIMESTAMP)
     @NotNull
     private Date lastPasswordResetDate;
+
+    @OneToOne
+    Student student;
+
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
@@ -134,5 +139,9 @@ public class User {
 
     public void setLastPasswordResetDate(Date lastPasswordResetDate) {
         this.lastPasswordResetDate = lastPasswordResetDate;
+    }
+
+    public void setStudent(Student student) {
+        this.student = student;
     }
 }

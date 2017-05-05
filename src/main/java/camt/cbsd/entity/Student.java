@@ -1,5 +1,7 @@
 package camt.cbsd.entity;
 
+import camt.cbsd.entity.security.Authority;
+import camt.cbsd.entity.security.User;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import org.hibernate.annotations.*;
@@ -20,6 +22,7 @@ import java.util.Optional;
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Builder
+
 public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -35,11 +38,18 @@ public class Student {
     @ManyToMany
     List<Course> enrolledCourse = new ArrayList<>();
 
+    @OneToOne(mappedBy = "student")
+    User user;
+
     public List<Course> addCourse(Course course) {
         enrolledCourse = Optional.ofNullable(enrolledCourse).orElse(new ArrayList<>());
         enrolledCourse.add(course);
         return enrolledCourse;
 
+    }
+
+    public List<Authority> getAuthorities(){
+        return user.getAuthorities();
     }
 
 

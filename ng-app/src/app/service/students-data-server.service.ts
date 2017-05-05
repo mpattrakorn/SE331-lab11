@@ -18,7 +18,10 @@ export class StudentsDataServerService {
   getStudentsData() {
     let studentArray: Student[];
     return this.http.get('http://localhost:8080/student',({headers:this.headers}))
-      .map(res => res.json());
+        .map(res => res.json())
+        .catch( (error: any) => {
+          return Observable.throw(new Error('UnAuthorize'));
+       });
 
   }
 
